@@ -430,7 +430,9 @@ h1 a.navbar-brand {
 .navbar-collapse.in {
 	margin-top: -5px !important;
 }
-
+.navbar-header{
+	padding: 15px;
+}
 
 
 /*===========================
@@ -1077,7 +1079,7 @@ Media queries
 @media (max-width: 767px) {
 
 	.navbar.navbar-fixed-top {
-		background-color:rgba(0,0,0,1);
+		background-color:rgba(0,0,0,0.3);
 	}
 	.navbar .navbar-collapse ul.nav {
 		background-color: #444;
@@ -1090,7 +1092,7 @@ Media queries
 		border-bottom: 1px solid #666;
 	}
 	section.featured {
-		padding-top: 80px;
+		/*padding-top: 10px;*/
 	}
 	
 	.team-member,.col-lg-4 {
@@ -1099,5 +1101,11 @@ Media queries
 	
 	.stats .col-md-3 {
 		margin-bottom: 30px;
+	}
+	blockquote.bigquote {
+		border: none;
+		font-size: 28px;
+		font-weight: 700;
+		line-height: 1.1em;
 	}
 }
