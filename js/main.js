@@ -140,6 +140,6 @@
             map: map
         });
     }
-    google.maps.event.addDomListener(window, 'load', initialize_google_map);
+   // google.maps.event.addDomListener(window, 'load', initialize_google_map);
 
 })(jQuery);
