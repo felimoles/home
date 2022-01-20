@@ -1,18 +1,10 @@
-// Three.js - Load .OBJ and .MTL file
-// from https://threejsfundamentals.org/threejs/threejs-load-obj-materials.html
-
-import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r115/build/three.module.js';
-import { OrbitControls, MapControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r115/examples/jsm/controls/OrbitControls.js';
-import { OBJLoader2 } from 'https://threejsfundamentals.org/threejs/resources/threejs/r115/examples/jsm/loaders/OBJLoader2.js';
-import { FBXLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r115/examples/jsm/loaders/FBXLoader.js';
-//import {MtlObjBridge} from 'https://threejsfundamentals.org/threejs/resources/threejs/r115/examples/jsm/loaders/obj2/bridge/MtlObjBridge.js';
 
 function main() {
-
-  const canvas = document.querySelector('#c');
-  const renderer = new THREE.WebGLRenderer({ canvas });
-  const fov = 55;
-  const aspect = canvas.clientWidth / canvas.clientHeight;  // the canvas default
+	
+	const canvas = document.querySelector('#c');
+	const renderer = new THREE.WebGLRenderer({ canvas });
+	const fov = 55;
+	const aspect = canvas.clientWidth / canvas.clientHeight;  // the canvas default
   /*const near = 0.1;
   const far = 100;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
@@ -31,12 +23,18 @@ function main() {
 
   controls.maxPolarAngle = Math.PI / 2;
 */
-      let camera, scene, renderer;
+			import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r115/build/three.module.js';
+
+
+
+			let camera, scene, renderer;
 			let plane;
 			let pointer, raycaster, isShiftDown = false;
 
 			let rollOverMesh, rollOverMaterial;
 			let cubeGeo, cubeMaterial;
+            let color = "#066CFE";
+            let mat;
 
 			const objects = [];
 
@@ -44,9 +42,10 @@ function main() {
 			render();
 
 			function init() {
+                        
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-				camera.position.set( 500, 800, 1300 );
+				camera.position.set( 400, 900, 900 );
 				camera.lookAt( 0, 0, 0 );
 
 				scene = new THREE.Scene();
@@ -62,7 +61,7 @@ function main() {
 				// cubes
 
 				cubeGeo = new THREE.BoxGeometry( 50, 50, 50 );
-				//cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, map: new THREE.TextureLoader().load( 'textures/square-outline-textured.png' ) } );
+				//cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, map: new THREE.TextureLoader().load( 'square-outline-textured.png' ) } );
 
 				// grid
 
@@ -104,6 +103,21 @@ function main() {
 				//
 
 				window.addEventListener( 'resize', onWindowResize );
+                mat = new THREE.MeshStandardMaterial({
+                    color: color,
+                    opacity: 0.8,
+                    transparent: true
+                })
+
+
+
+                const voxel = new THREE.Mesh( cubeGeo, mat );
+						voxel.position.set(75, 25,275);
+						voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
+						scene.add( voxel );
+                        console.log(voxel)
+
+						objects.push( voxel );
 
 			}
 
@@ -167,12 +181,17 @@ function main() {
 
 					} else {
 
-						const voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+						const voxel = new THREE.Mesh( cubeGeo, mat );
 						voxel.position.copy( intersect.point ).add( intersect.face.normal );
+                        console.log(voxel.position)
 						voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
 						scene.add( voxel );
+                        console.log(voxel)
 
 						objects.push( voxel );
+                        //scene.add(voxel);
+                        //voxel.position.set(100, 200, 100);
+                        
 
 					}
 
@@ -201,32 +220,12 @@ function main() {
 				}
 
 			}
-  function resizeRendererToDisplaySize(renderer) {
-    const canvas = renderer.domElement;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-      renderer.setSize(width, height, false);
-    }
-    return needResize;
-  }
-  function render() {
 
-    if (resizeRendererToDisplaySize(renderer)) {
-      const canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    }
+			function render() {
 
-    renderer.render(scene, camera);
+				renderer.render( scene, camera );
 
-   // requestAnimationFrame(render);
-
-  }
-  requestAnimationFrame(render);
-  document.addEventListener('mousedown', onDocumentMouseDown, false);
+			}
 
 }
-
 main();
