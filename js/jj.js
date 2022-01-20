@@ -1,33 +1,6 @@
+			import * as THREE from './threejs/three.module.js';
 
-function main() {
-	
-	const canvas = document.querySelector('#c');
-	const renderer = new THREE.WebGLRenderer({ canvas });
-	const fov = 55;
-	const aspect = canvas.clientWidth / canvas.clientHeight;  // the canvas default
-  /*const near = 0.1;
-  const far = 100;
-  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.set(0, 10, 50);
-
-  var mouse = new THREE.Vector2(), INTERSECTED;
-  var radius = 100, theta = 0;
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = false;
-  controls.enablePan = true;
-  controls.enableDamping = true;
-  controls.rotateSpeed = -0.25;
-  controls.minDistance = 30;
-  controls.maxDistance = 100;
-  controls.target.z -= 0.01;
-
-  controls.maxPolarAngle = Math.PI / 2;
-*/
-			import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r115/build/three.module.js';
-
-
-
-			let camera, scene, renderer;
+			let camera, scene;
 			let plane;
 			let pointer, raycaster, isShiftDown = false;
 
@@ -37,6 +10,10 @@ function main() {
             let mat;
 
 			const objects = [];
+			const canvas = document.querySelector('#c');
+			const renderer = new THREE.WebGLRenderer({ canvas });
+ 			const fov = 55;
+  			const aspect = canvas.clientWidth / canvas.clientHeight;  // the canvas default
 
 			init();
 			render();
@@ -90,7 +67,7 @@ function main() {
 				directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
 				scene.add( directionalLight );
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				//renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
@@ -226,6 +203,3 @@ function main() {
 				renderer.render( scene, camera );
 
 			}
-
-}
-main();
